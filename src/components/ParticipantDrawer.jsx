@@ -6,6 +6,8 @@ import { DRUG_BY_CODE } from "../lib/reference";
 import { Badge, RiskBadge, StatusBadge, btnGhost, btnPrimary } from "./Card";
 import RiskRing from "./RiskRing";
 import { Timeline, CoverageBars } from "./Timeline";
+import AiRiskAnalysis from "./AiRiskAnalysis";
+import { mapParticipantToPayload } from "../services/aiRiskService";
 
 function Signal({ icon: Icon, title, text }) {
   return (
@@ -131,7 +133,23 @@ export default function ParticipantDrawer() {
             )}
           </section>
 
+          {/* Real-time AI Analysis via FastAPI */}
+          <section className="rounded-[var(--radius-card)] bg-white border border-leaf-100 shadow-[var(--shadow-card)] p-5">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-forest-700)]">Integrasi Model Cerdas</p>
+                <h3 className="text-base font-bold text-[var(--color-forest-900)]">Inferensi AI DETEKS (FastAPI)</h3>
+              </div>
+              <Badge tone="forest">ZeroGPU · Isolation Forest</Badge>
+            </div>
+            <p className="text-xs text-[var(--color-ink-600)] mb-3">
+              Kirimkan metrik klaim peserta ini langsung ke microservice AI di Hugging Face Spaces untuk evaluasi Risk Fusion (60% Rules + 40% ML).
+            </p>
+            <AiRiskAnalysis key={p.id} payload={mapParticipantToPayload(p)} />
+          </section>
+
           {/* Rekomendasi */}
+
           <section className="rounded-[var(--radius-card)] border-2 border-[var(--color-forest-900)]/15 bg-[var(--color-leaf-100)] p-5">
             <div className="flex items-center gap-2 text-[var(--color-forest-900)] mb-1.5"><Info size={17} /><h3 className="text-base font-bold">Rekomendasi Tindak Lanjut</h3></div>
             <p className="text-sm font-semibold text-[var(--color-forest-900)] leading-relaxed">
